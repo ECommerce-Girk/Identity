@@ -9,15 +9,23 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Identity.Infra.Authentication;
 
-public sealed class TokenProvider(IConfiguration configuration) : ITokenProvider
+public sealed class TokenProvider : ITokenProvider
 {
+    private readonly string issuer;
+    private readonly string audience;
+    private readonly SigningCredentials credentials;
+
+    public TokenProvider(IConfiguration config)
+    {
+        var jwtSettings = config.GetSection("JwtSettings");
+        issuer = jwtSettings["Issuer"]!;
+        audience = jwtSettings["Audience"]!;
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]!));
+        credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+    }
+
     public string Create(User user)
     {
-        string secretKey = configuration["Jwt:Secret"]!;
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
-
-        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(
@@ -27,8 +35,8 @@ public sealed class TokenProvider(IConfiguration configuration) : ITokenProvider
             ]),
             //Expires = DateTime.UtcNow.AddMinutes(configuration.GetValue<int>("Jwt:ExpirationInMinutes")),
             SigningCredentials = credentials,
-            Issuer = configuration["Jwt:Issuer"],
-            Audience = configuration["Jwt:Audience"]
+            Issuer = issuer,
+            Audience = audience
         };
 
         var handler = new JsonWebTokenHandler();

@@ -5,27 +5,22 @@ using Identity.Core.Users;
 
 namespace Identity.Tests;
 
-public class AuthTests(CustomWebApplicationFactory factory) : TestBase(factory)
+public class AuthenticationTests(CustomWebApplicationFactory factory) : TestBase(factory)
 {
     [Fact]
     public async Task Login_WithValidCredentials_ReturnsOK()
     {
-        // This test just verifies the endpoint exists and handles valid requests correctly
-        // The actual token generation is tested through integration tests
-        
-        // Arrange - create a user
-        var user = new User
+        // Arrange
+        var user = new CreateUserModel
         { 
             Name = "Test User", 
             Email = "test@example.com",
-            PasswordHash = "password123"
+            Password = "password123"
         };
 
-        var ctx = GetDbContext();
-        ctx.Users.Add(user);
-        await ctx.SaveChangesAsync();
+        await Client.PostAsJsonAsync("/users", user);
 
-        var loginRequest = new LoginModel(user.Email, user.PasswordHash);
+        var loginRequest = new LoginModel(user.Email, user.Password);
 
         // Act
         var response = await Client.PostAsJsonAsync("/login", loginRequest);
@@ -45,13 +40,11 @@ public class AuthTests(CustomWebApplicationFactory factory) : TestBase(factory)
             PasswordHash = "password123"
         };
 
-        var ctx = GetDbContext();
-        ctx.Users.Add(user);
-        await ctx.SaveChangesAsync();
+        await Client.PostAsJsonAsync("/users", user);
+
+        var loginRequest = new LoginModel(user.Email, "wrongpassword");
 
         // Act
-            var loginRequest = new LoginModel(user.Email, "wrongpassword");
-
         var response = await Client.PostAsJsonAsync("/login", loginRequest);
 
         // Assert

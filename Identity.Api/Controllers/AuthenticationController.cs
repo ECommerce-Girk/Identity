@@ -17,11 +17,11 @@ public class AuthenticationController : ControllerBase
             var token = await cmd.Execute(request, ct);
             return Ok(new { Token = token });
         }
-        catch (ValidationEx ex) when (ex.Message == "Invalid credentials.")
+        catch (NotFoundEx)
         {
             return Unauthorized();
-        }
-        catch (NotFoundEx ex) when (ex.Message == "Invalid credentials.")
+        }   
+        catch (NotAllowedEx)
         {
             return Unauthorized();
         }
