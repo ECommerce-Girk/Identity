@@ -30,7 +30,7 @@
 - **Enums:** They must live in a separate file and always add "Enum" suffix. (e.g., `public enum TaskStatusEnum`)
 
 ## Database & EF Core Rules
-- Database context: `TasksDbContext`
+- Database context: `IdentityDbContext`
 - Migrations location: `src/api/Identity.Infra/Database/Migrations`
 - Connection string in `appsettings.json`
 - **Do NOT** manually edit migration snapshot files unless explicitly asked.
