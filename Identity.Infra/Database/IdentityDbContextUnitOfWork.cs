@@ -1,4 +1,4 @@
-using Identity.Core.Abstractions;
+using Base;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Identity.Infra.Database;

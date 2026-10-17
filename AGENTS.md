@@ -14,7 +14,7 @@
 - Framework: .NET 10 / C# 13
 - Uses ASP.NET Core with Entity Framework Core
 - PostgreSQL database (Npgsql provider)
-- Uses MSTest for unit and integration testing
+- Uses Xunit for unit and integration testing
 - Testcontainers (`postgres:18-alpine`) for integration testing with Postgres
 
 ## Code Style & Conventions
@@ -31,8 +31,8 @@
 
 ## Database & EF Core Rules
 - Database context: `IdentityDbContext`
-- Migrations location: `src/api/Identity.Infra/Database/Migrations`
-- Connection string in `appsettings.json`
+- Migrations location: `Identity.Infra/Database/Migrations`
+- Connection string in `appsettings.Development.json`
 - **Do NOT** manually edit migration snapshot files unless explicitly asked.
 - Prefer LINQ pattern matching over complex raw SQL statements where possible.
 - Use arrays when returning collections.
@@ -45,7 +45,6 @@
 - When creating a resource assert for the response model and the db state.
 
 ## Error Handling & Exception Rules
-- **No `try-catch` in Controllers:** Controller/endpoint actions must **NEVER** wrap service calls in `try-catch` blocks. Allow domain and validation exceptions to bubble up.
 - **Global Exception Handling:** All domain failures must throw custom exceptions inheriting from `Ex` (e.g., `NotFoundEx`, `ValidationEx`, `NotAllowedEx`).
 - **Handler Strategy:** Errors are caught globally by `CustomExceptionHandler` (`IExceptionHandler`), which serializes them into standardized `ProblemDetails` responses with optional `ReasonCode` metadata.
 - **Service Responsibility:** Domain and business logic validation belongs strictly in the service layer. Services must throw the appropriate custom `Ex` type with a descriptive message and optional `ReasonCode`.
