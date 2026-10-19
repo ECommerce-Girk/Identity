@@ -28,8 +28,9 @@ public class CreateUser(
         };
 
         _uow.Add(user);
+        _uow.Raise(new UserCreatedEvent(user.Id));
 
-        await _uow.SaveChangesAsync(ct);
+        await _uow.SaveChanges(ct);
         return user;
     }
 }

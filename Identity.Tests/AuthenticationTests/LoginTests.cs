@@ -5,10 +5,10 @@ using Identity.Core.Users;
 
 namespace Identity.Tests;
 
-public class AuthenticationTests(CustomWebApplicationFactory factory) : TestBase(factory)
+public class LoginTests(CustomWebApplicationFactory factory) : TestBase(factory), IClassFixture<CustomWebApplicationFactory>
 {
     [Fact]
-    public async Task Login_WithValidCredentials_ReturnsOK()
+    public async Task WithValidCredentials_ReturnsOK()
     {
         // Arrange
         var user = new CreateUserModel
@@ -30,7 +30,7 @@ public class AuthenticationTests(CustomWebApplicationFactory factory) : TestBase
     }
 
     [Fact]
-    public async Task Login_WithInvalidCredentials_ReturnsUnauthorized()
+    public async Task WithInvalidCredentials_ReturnsUnauthorized()
     {
         // Arrange
         var user = new User
@@ -52,7 +52,7 @@ public class AuthenticationTests(CustomWebApplicationFactory factory) : TestBase
     }
 
     [Fact]
-    public async Task Login_WithNonExistentUser_ReturnsUnauthorized()
+    public async Task WithNonExistentUser_ReturnsUnauthorized()
     {
         //Arrange
         var loginRequest = new LoginModel("nonexistent@example.com", "password123");

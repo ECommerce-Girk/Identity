@@ -47,6 +47,31 @@ namespace Identity.Infra.Database.Migrations
 
                     b.ToTable("Users");
                 });
+
+            modelBuilder.Entity("Identity.Infra.Database.Outbox", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("EventType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Payload")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset?>("PublishedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Outbox");
+                });
 #pragma warning restore 612, 618
         }
     }

@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Identity.Tests;
 
-[Collection(nameof(IntegrationTestCollection))]
 public abstract class TestBase
 {
     protected CustomWebApplicationFactory Factory { get; }
@@ -22,8 +21,3 @@ public abstract class TestBase
         return dbContext;
     }
 }
-
-[CollectionDefinition(nameof(IntegrationTestCollection))]
-public sealed class IntegrationTestCollection : ICollectionFixture<CustomWebApplicationFactory>
-{
-};
