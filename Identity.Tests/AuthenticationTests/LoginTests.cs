@@ -20,7 +20,7 @@ public class LoginTests(CustomWebApplicationFactory factory) : TestBase(factory)
 
         await Client.PostAsJsonAsync("/users", user);
 
-        var loginRequest = new LoginModel(user.Email, user.Password);
+        var loginRequest = new UserLoginModel(user.Email, user.Password);
 
         // Act
         var response = await Client.PostAsJsonAsync("/login", loginRequest);
@@ -42,7 +42,7 @@ public class LoginTests(CustomWebApplicationFactory factory) : TestBase(factory)
 
         await Client.PostAsJsonAsync("/users", user);
 
-        var loginRequest = new LoginModel(user.Email, "wrongpassword");
+        var loginRequest = new UserLoginModel(user.Email, "wrongpassword");
 
         // Act
         var response = await Client.PostAsJsonAsync("/login", loginRequest);
@@ -55,7 +55,7 @@ public class LoginTests(CustomWebApplicationFactory factory) : TestBase(factory)
     public async Task WithNonExistentUser_ReturnsUnauthorized()
     {
         //Arrange
-        var loginRequest = new LoginModel("nonexistent@example.com", "password123");
+        var loginRequest = new UserLoginModel("nonexistent@example.com", "password123");
 
         // Act
         var response = await Client.PostAsJsonAsync("/login", loginRequest);

@@ -11,7 +11,7 @@ public class CreateUserModel
 }
 
 public class CreateUser(
-    IUnitOfWork _uow,
+    IUoW _uow,
     IPasswordHasher _passwordHasher,
     IUserRepository _userRepository)
 {
@@ -28,7 +28,7 @@ public class CreateUser(
         };
 
         _uow.Add(user);
-        _uow.Raise(new UserCreatedEvent(user.Id));
+        _uow.Raise(new UserCreatedV1() { Id = user.Id });
 
         await _uow.SaveChanges(ct);
         return user;

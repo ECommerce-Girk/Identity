@@ -4,14 +4,14 @@ using Identity.Core.Users;
 
 namespace Identity.Core.Authentication;
 
-public record LoginModel(string Email, string Password);
+public record UserLoginModel(string Email, string Password);
 
-public class Login(
+public class UserLogin(
     ITokenProvider _tokenProvider,
     IUserRepository _userRepository,
     IPasswordHasher _passwordHasher)
 {
-    public async Task<string> Execute(LoginModel model, CancellationToken ct)
+    public async Task<string> Execute(UserLoginModel model, CancellationToken ct)
     {
         var user = await _userRepository.GetByEmail(model.Email, ct);
 

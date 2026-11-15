@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Identity.Api.Users;
 
+[ApiController]
+[Route("api/[controller]")]
 public class UserController : ControllerBase
 {
-    [HttpPost("/users")]
+    [HttpPost]
     public async Task<IActionResult> CreateUser(
         [FromBody] CreateUserModel request,
         [FromServices] CreateUser cmd,

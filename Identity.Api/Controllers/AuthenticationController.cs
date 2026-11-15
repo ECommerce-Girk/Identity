@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Identity.Api.Controllers;
 
+[ApiController]
 public class AuthenticationController : ControllerBase
 {
-    [HttpPost("/login")]
+    [HttpPost("api/login")]
     public async Task<IActionResult> Login(
-        [FromServices] Login cmd,
-        [FromBody] LoginModel request,
+        [FromServices] UserLogin cmd,
+        [FromBody] UserLoginModel request,
         CancellationToken ct)
     {
         try
