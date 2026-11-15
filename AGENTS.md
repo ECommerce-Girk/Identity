@@ -2,11 +2,11 @@
 
 ## Project Structure
 - **Root**: .NET 10 Web API project using ASP.NET Core
-- **Main Application**: `Identity.Api`
-- **Tests**: `Identity.Tests`
+- **Main Application**: `Api`
+- **Tests**: `Tests`
 
 ## Key Commands
-- **Run API**: `dotnet run --project Identity.Api`
+- **Run API**: `dotnet run --project Api`
 - **Run Tests**: `dotnet test`
 - **Build Solution**: `dotnet build`
 
@@ -31,7 +31,7 @@
 
 ## Database & EF Core Rules
 - Database context: `IdentityDbContext`
-- Migrations location: `Identity.Infra/Database/Migrations`
+- Migrations location: `Infra/Database/Migrations`
 - Connection string in `appsettings.Development.json`
 - **Do NOT** manually edit migration snapshot files unless explicitly asked.
 - Prefer LINQ pattern matching over complex raw SQL statements where possible.

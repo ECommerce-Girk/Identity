@@ -1,0 +1,66 @@
+using System.Net;
+using System.Net.Http.Json;
+using Core.Authentication;
+using Core.Users;
+
+namespace Tests;
+
+public class LoginTests(CustomWebApplicationFactory factory) : TestBase(factory), IClassFixture<CustomWebApplicationFactory>
+{
+    [Fact]
+    public async Task WithValidCredentials_ReturnsOK()
+    {
+        // Arrange
+        var user = new CreateUserModel
+        { 
+            Name = "Test User", 
+            Email = "test@example.com",
+            Password = "password123"
+        };
+
+        await Client.PostAsJsonAsync("/users", user);
+
+        var loginRequest = new UserLoginModel(user.Email, user.Password);
+
+        // Act
+        var response = await Client.PostAsJsonAsync("/login", loginRequest);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task WithInvalidCredentials_ReturnsUnauthorized()
+    {
+        // Arrange
+        var user = new User
+        { 
+            Name = "Test User", 
+            Email = "test@example.com",
+            PasswordHash = "password123"
+        };
+
+        await Client.PostAsJsonAsync("/users", user);
+
+        var loginRequest = new UserLoginModel(user.Email, "wrongpassword");
+
+        // Act
+        var response = await Client.PostAsJsonAsync("/login", loginRequest);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task WithNonExistentUser_ReturnsUnauthorized()
+    {
+        //Arrange
+        var loginRequest = new UserLoginModel("nonexistent@example.com", "password123");
+
+        // Act
+        var response = await Client.PostAsJsonAsync("/login", loginRequest);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+}
