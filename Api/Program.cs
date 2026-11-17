@@ -2,8 +2,8 @@
 using System.Text;
 using Base;
 using Base.Database;
+using Base.Infra;
 using Base.Message;
-using Base.Message.Publisher;
 using Core.Abstractions;
 using Core.Authentication;
 using Core.Users;
@@ -38,7 +38,7 @@ services.AddAuthentication()
     });
 
 
-services.AddSingleton<IMessageRegistry, MessageRegistry>();
+services.AddSingleton<IOutboxMessageRegistry, MessageRegistry>();
 services.AddDbContext<IdentityDbContext>(o => o.UseNpgsql(builder.Configuration.GetConnectionString("Db")));
 services.AddScoped<IUoW, IdentityDbContext>();
 services.AddScoped<ITransactionalUoW, IdentityDbContext>();
@@ -51,7 +51,8 @@ services.AddScoped<IUserRepository, UserRepository>();
 services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 services.Configure<BrokerSettings>(builder.Configuration.GetSection("BrokerSettings"));
-services.AddHostedService<MessagePublisher<IdentityDbContext>>();
+services.AddHostedService<MessagePublisher>();
+services.AddScoped<IOutboxMessageRepository, OutboxMessageRepository>();
 
 var app = builder.Build();
 
