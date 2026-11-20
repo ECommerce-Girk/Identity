@@ -38,25 +38,7 @@ services.AddAuthentication()
     });
 
 
-services.AddSingleton<IOutboxMessageRegistry, MessageRegistry>();
-services.AddScoped<IOutboxMessageRepository, OutboxMessageRepository>();
-
-services.AddDbContext<IdentityDbContext>(o =>
-    o.UseNpgsql(builder.Configuration.GetConnectionString("Db")));
-
-services.AddScoped<IUoW>(sp =>
-    sp.GetRequiredService<IdentityDbContext>());
-
-services.AddScoped<ITransactionalUoW>(sp =>
-    sp.GetRequiredService<IdentityDbContext>());
-
-services.AddScoped<ICollector>(sp =>
-    sp.GetRequiredService<IdentityDbContext>());
-
-services.AddScoped<OutboxDbContext>(sp =>
-    sp.GetRequiredService<IdentityDbContext>());
-
-services.AddScoped<IOutboxMessageRepository, OutboxMessageRepository>();
+services.AddOutboxDbContext<IdentityDbContext>(builder.Configuration.GetConnectionString("Db")!);
 
 services.AddScoped<UserLogin>();
 services.AddScoped<ITokenProvider, TokenProvider>();
@@ -64,9 +46,6 @@ services.AddScoped<ITokenProvider, TokenProvider>();
 services.AddScoped<CreateUser>();
 services.AddScoped<IUserRepository, UserRepository>();
 services.AddScoped<IPasswordHasher, PasswordHasher>();
-
-services.Configure<BrokerSettings>(builder.Configuration.GetSection("BrokerSettings"));
-services.AddHostedService<MessagePublisher>();
 
 var app = builder.Build();
 

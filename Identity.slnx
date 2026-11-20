@@ -3,4 +3,5 @@
   <Project Path="Core/Core.csproj" />
   <Project Path="Infra/Infra.csproj" />
   <Project Path="Tests/Tests.csproj" />
+  <Project Path="Worker/Worker.csproj" />
 </Solution>
