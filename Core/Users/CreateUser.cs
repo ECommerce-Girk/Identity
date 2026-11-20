@@ -12,7 +12,7 @@ public class CreateUserModel
 
 public class CreateUser(
     IUoW _uow,
-    IDomainEventCollector _collector,
+    ICollector _collector,
     IPasswordHasher _passwordHasher,
     IUserRepository _userRepository)
 {

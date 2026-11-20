@@ -5,9 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Database;
 
-public partial class IdentityDbContext(
-    DbContextOptions<IdentityDbContext> options,
-    IOutboxMessageRegistry messageRegistry) : OutboxDbContext(options, messageRegistry)
+public partial class IdentityDbContext(DbContextOptions<IdentityDbContext> options) : OutboxDbContext(options)
 {
     public DbSet<User> Users => Set<User>();
 }

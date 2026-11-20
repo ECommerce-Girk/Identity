@@ -50,7 +50,7 @@ services.AddScoped<IUoW>(sp =>
 services.AddScoped<ITransactionalUoW>(sp =>
     sp.GetRequiredService<IdentityDbContext>());
 
-services.AddScoped<IDomainEventCollector>(sp =>
+services.AddScoped<ICollector>(sp =>
     sp.GetRequiredService<IdentityDbContext>());
 
 services.AddScoped<OutboxDbContext>(sp =>

@@ -1,4 +1,4 @@
-using Base.Infra;
+using Base.Message;
 using Core.Users;
 
 public class MessageRegistry : IOutboxMessageRegistry
