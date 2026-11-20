@@ -39,9 +39,24 @@ services.AddAuthentication()
 
 
 services.AddSingleton<IOutboxMessageRegistry, MessageRegistry>();
-services.AddDbContext<IdentityDbContext>(o => o.UseNpgsql(builder.Configuration.GetConnectionString("Db")));
-services.AddScoped<IUoW, IdentityDbContext>();
-services.AddScoped<ITransactionalUoW, IdentityDbContext>();
+services.AddScoped<IOutboxMessageRepository, OutboxMessageRepository>();
+
+services.AddDbContext<IdentityDbContext>(o =>
+    o.UseNpgsql(builder.Configuration.GetConnectionString("Db")));
+
+services.AddScoped<IUoW>(sp =>
+    sp.GetRequiredService<IdentityDbContext>());
+
+services.AddScoped<ITransactionalUoW>(sp =>
+    sp.GetRequiredService<IdentityDbContext>());
+
+services.AddScoped<IDomainEventCollector>(sp =>
+    sp.GetRequiredService<IdentityDbContext>());
+
+services.AddScoped<OutboxDbContext>(sp =>
+    sp.GetRequiredService<IdentityDbContext>());
+
+services.AddScoped<IOutboxMessageRepository, OutboxMessageRepository>();
 
 services.AddScoped<UserLogin>();
 services.AddScoped<ITokenProvider, TokenProvider>();
@@ -52,7 +67,6 @@ services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 services.Configure<BrokerSettings>(builder.Configuration.GetSection("BrokerSettings"));
 services.AddHostedService<MessagePublisher>();
-services.AddScoped<IOutboxMessageRepository, OutboxMessageRepository>();
 
 var app = builder.Build();
 

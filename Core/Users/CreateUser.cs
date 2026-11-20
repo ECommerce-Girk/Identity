@@ -12,6 +12,7 @@ public class CreateUserModel
 
 public class CreateUser(
     IUoW _uow,
+    IDomainEventCollector _collector,
     IPasswordHasher _passwordHasher,
     IUserRepository _userRepository)
 {
@@ -28,7 +29,7 @@ public class CreateUser(
         };
 
         _uow.Add(user);
-        _uow.Raise(new UserCreatedV1() { Id = user.Id });
+        _collector.Collect(new UserCreatedV1() { Id = user.Id });
 
         await _uow.SaveChanges(ct);
         return user;
