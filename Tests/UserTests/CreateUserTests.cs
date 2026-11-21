@@ -13,8 +13,8 @@ public class CreateUserTests(CustomWebApplicationFactory factory) : TestBase(fac
         var createUserRequest = new CreateUserModel 
         { 
             Name = "Test User", 
-            Email = "test@example.com",
-            Password = "password123"
+            Email = new("test@example.com"),
+            Password = new("password123")
         };
 
         // Act
@@ -45,7 +45,7 @@ public class CreateUserTests(CustomWebApplicationFactory factory) : TestBase(fac
         { 
             Name = "Test User", 
             Email = existingUser.Email,
-            Password = "password456"
+            Password = new("password456")
         };
 
         // Act
@@ -60,7 +60,7 @@ public class CreateUserTests(CustomWebApplicationFactory factory) : TestBase(fac
         var existingUser = new User
         { 
             Name = "Existing User", 
-            Email = "existing@example.com",
+            Email = new("test@example.com"),
             PasswordHash = "password123"
         };
 

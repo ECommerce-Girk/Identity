@@ -1,6 +1,6 @@
 using Base;
 
-namespace Core.Users;
+namespace Core.DomainEvents;
 
 public record UserCreatedV1 : IDomainEvent
 {

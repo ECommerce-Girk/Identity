@@ -1,13 +1,15 @@
 using Base;
 using Core.Abstractions;
+using Core.DomainEvents;
+using Core.ValueObjects;
 
 namespace Core.Users;
 
 public class CreateUserModel
 {
-    public string Name { get; set; } = null!;
-    public string Email { get; set; } = null!;
-    public string Password { get; set; } = null!;
+    public required string Name { get; set; }
+    public required Email Email { get; set; }
+    public required Password Password { get; set; }
 }
 
 public class CreateUser(

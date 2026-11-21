@@ -14,8 +14,8 @@ public class LoginTests(CustomWebApplicationFactory factory) : TestBase(factory)
         var user = new CreateUserModel
         { 
             Name = "Test User", 
-            Email = "test@example.com",
-            Password = "password123"
+            Email = new("test@example.com"),
+            Password = new("password123")
         };
 
         await Client.PostAsJsonAsync("/users", user);
@@ -35,8 +35,8 @@ public class LoginTests(CustomWebApplicationFactory factory) : TestBase(factory)
         // Arrange
         var user = new User
         { 
-            Name = "Test User", 
-            Email = "test@example.com",
+            Name = "Test User",
+            Email = new("test@example.com"),
             PasswordHash = "password123"
         };
 

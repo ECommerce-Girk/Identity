@@ -1,4 +1,4 @@
-using Base.Exceptions;
+using Base;
 using Core.Authentication;
 using Microsoft.AspNetCore.Mvc;
 

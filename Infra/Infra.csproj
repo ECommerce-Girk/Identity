@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Base.Message" Version="2611.20.15" />
-    <PackageReference Include="Base.Database" Version="2611.20.21" />
+    <PackageReference Include="Base.Database" Version="2611.21.22" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.23.0" />
   </ItemGroup>
 

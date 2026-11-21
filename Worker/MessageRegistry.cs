@@ -1,5 +1,5 @@
 using Base.Message;
-using Core.Users;
+using Core.DomainEvents;
 
 public class MessageRegistry : IOutboxMessageRegistry
 {

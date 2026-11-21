@@ -13,12 +13,22 @@ using Infra.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
+using Infra;
+using Microsoft.AspNetCore.OpenApi;
+using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
-services.AddControllers();
-services.AddOpenApi();
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Add();
+});
+builder.Services.AddOpenApi(options =>
+{
+    options.AddSchemaTransformer<TextSchemaTransformer>();
+});
 services.AddProblemDetails();
 //services.AddExceptionHandler<CustomExceptionHandler>();
 services.AddAuthentication()
@@ -62,3 +72,21 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public sealed class TextSchemaTransformer : IOpenApiSchemaTransformer
+{
+    public Task TransformAsync(
+        OpenApiSchema schema,
+        OpenApiSchemaTransformerContext context,
+        CancellationToken cancellationToken)
+    {
+        if (!typeof(Text).IsAssignableFrom(context.JsonTypeInfo.Type))
+            return Task.CompletedTask;
+
+        schema.Type = JsonSchemaType.String;
+        schema.Properties?.Clear();
+        schema.Required?.Clear();
+
+        return Task.CompletedTask;
+    }
+}
