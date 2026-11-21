@@ -4,7 +4,7 @@ using Core.ValueObjects;
 
 namespace Infra;
 
-public static class ValueObjectJsonConverters
+public static class ValueObjectsJsonConverters
 {
     public static void Add(this JsonSerializerOptions options)
     {
