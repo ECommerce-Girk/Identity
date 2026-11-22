@@ -9,4 +9,5 @@ public class User : Entity
     public required Email Email { get; set; }
     public required string PasswordHash { get; set; }
     public AccountStatusEnum AccountStatus { get; set; } = AccountStatusEnum.Active;
+    public UserPoints Points { get; set; } = 0;
 }

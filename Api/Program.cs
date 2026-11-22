@@ -2,8 +2,6 @@
 using System.Text;
 using Base;
 using Base.Database;
-using Base.Infra;
-using Base.Message;
 using Core.Abstractions;
 using Core.Authentication;
 using Core.Users;
@@ -21,13 +19,10 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
 
-builder.Services.AddControllers().AddJsonOptions(options =>
+builder.Services.AddControllers().AddJsonOptions(opts => opts.JsonSerializerOptions.AddValueObjectsJsonConverters());
+builder.Services.AddOpenApi(opts =>
 {
-    options.JsonSerializerOptions.Add();
-});
-builder.Services.AddOpenApi(options =>
-{
-    options.AddSchemaTransformer<TextSchemaTransformer>();
+    opts.AddSchemaTransformer<TextSchemaTransformer>();
 });
 services.AddProblemDetails();
 //services.AddExceptionHandler<CustomExceptionHandler>();

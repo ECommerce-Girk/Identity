@@ -27,7 +27,8 @@ public class CreateUser(
         {
             Name = model.Name,
             Email = model.Email,
-            PasswordHash = _passwordHasher.Hash(model.Password)
+            PasswordHash = _passwordHasher.Hash(model.Password),
+            Points = 10
         };
 
         _uow.Add(user);

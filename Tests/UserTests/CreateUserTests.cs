@@ -61,7 +61,8 @@ public class CreateUserTests(CustomWebApplicationFactory factory) : TestBase(fac
         { 
             Name = "Existing User", 
             Email = new("test@example.com"),
-            PasswordHash = "password123"
+            PasswordHash = "password123",
+            Points = 1
         };
 
         var ctx = GetDbContext();
