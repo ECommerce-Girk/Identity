@@ -1,13 +1,15 @@
+using Api.Models.Requests;
+using Api.Models.Responses;
 using Core.Users;
-using Core.ValueObjects;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Users;
+namespace Api.Controllers;
 
 [ApiController]
 public class UserController : ControllerBase
 {
     [HttpPost("api/v1/users")]
+    [ProducesResponseType(typeof(CreateUserResponse), 201)]
     public async Task<IActionResult> CreateUser(
         [FromBody] CreateUserRequest request,
         [FromServices] CreateUser cmd,
@@ -27,6 +29,3 @@ public class UserController : ControllerBase
         return Created("api/v1/users/" + cmdResult.Id, response);
     }
 }
-
-public record CreateUserRequest(string Name, Email Email, Password Password);
-public record CreateUserResponse(Guid Id, Email Email);
