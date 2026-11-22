@@ -14,6 +14,7 @@ using Scalar.AspNetCore;
 using Infra;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi;
+using Core;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;

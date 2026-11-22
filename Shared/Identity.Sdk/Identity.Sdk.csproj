@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Base" Version="2611.21.14" />
+  </ItemGroup>
+
 </Project>
