@@ -1,3 +1,5 @@
+using Api.Models.Requests;
+using Api.Models.Responses;
 using Base;
 using Core.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -8,15 +10,18 @@ namespace Api.Controllers;
 public class AuthenticationController : ControllerBase
 {
     [HttpPost("api/login")]
+    [ProducesResponseType(typeof(CreateUserResponse), 201)]
     public async Task<IActionResult> Login(
         [FromServices] UserLogin cmd,
-        [FromBody] UserLoginModel request,
+        [FromBody] UserLoginRequest request,
         CancellationToken ct)
     {
         try
         {
-            var token = await cmd.Execute(request, ct);
-            return Ok(new { Token = token });
+            var cmdInput = new UserLoginModel(request.Email, request.Password);
+            var token = await cmd.Execute(cmdInput, ct);
+            var response = new UserLoginResponse(token);
+            return Ok(response);
         }
         catch (NotFoundEx)
         {
