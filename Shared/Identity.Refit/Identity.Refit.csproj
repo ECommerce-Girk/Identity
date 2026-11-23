@@ -10,4 +10,8 @@
     <PackageReference Include="Refit" Version="17.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Identity.Sdk\Identity.Sdk.csproj" />
+  </ItemGroup>
+
 </Project>
