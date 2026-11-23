@@ -1,6 +1,6 @@
 <Solution>
   <Folder Name="/Shared/">
-    <Project Path="Shared/Identity.Generator/Identity.Generator.csproj" />
+    <Project Path="Shared/Identity.Refit/Identity.Refit.csproj" />
     <Project Path="Shared/Identity.Sdk/Identity.Sdk.csproj" />
   </Folder>
   <Project Path="Api/Api.csproj" />

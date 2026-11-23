@@ -1,4 +1,4 @@
-#r "nuget: Tools, 2611.22.6"
+#r "nuget: Tools, 2611.22.7"
 
 using Tools;
 
